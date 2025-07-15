@@ -1,0 +1,74 @@
+set hostname vpn-gw-4
+
+set property first-time-wizard off
+
+set expert password-hash $1$DBUpzBmW$cE3Rk0immvlj0/VZTihsZ/
+sleep 2
+delete interface LAN1_Switch
+sleep 5
+set interface DMZ unassigned
+set interface LAN1 unassigned
+set interface LAN2 unassigned
+set interface LAN3 unassigned
+set interface LAN4 unassigned
+set interface LAN3 ipv6-address 2a04:6447:900:4102::1 ipv6-prefix-length 64 
+set interface LAN2 ipv6-address 2a04:6447:900:4101::1 ipv6-prefix-length 64 
+set interface LAN1 ipv6-address 2a04:6447:900:4100::1 ipv6-prefix-length 64 
+set interface LAN3 ipv4-address 10.41.0.1 mask-length 24 
+set interface LAN2 ipv4-address 10.41.1.1 mask-length 24 
+set interface LAN1 ipv4-address 10.41.2.1 mask-length 24 
+set interface LAN3 state on
+set interface LAN2 state on
+set interface LAN1 state on
+
+set dhcp-ipv6 server interface LAN1 disable
+set dhcp-ipv6 server interface LAN2 disable
+set dhcp-ipv6 server interface LAN3 disable
+set dhcp-ipv6 server interface LAN4 disable
+
+add internet-connection-ipv6 interface-ipv6 WAN type-ipv6 static-ipv6 ipv6-address 2a04:6447:900:100::40 default-gw-ipv6 2a04:6447:900:100::3 prefix-length 64 use-connection-as-vlan vlan-id 100
+add internet-connection-ipv6 interface-ipv6 WAN type-ipv6 static-ipv6 ipv6-address 2a04:6447:900:101::40 default-gw-ipv6 2a04:6447:900:101::3 prefix-length 64 use-connection-as-vlan vlan-id 101
+add internet-connection-ipv6 interface-ipv6 WAN type-ipv6 static-ipv6 ipv6-address 2a04:6447:900:102::40 default-gw-ipv6 2a04:6447:900:102::3 prefix-length 64 use-connection-as-vlan vlan-id 102
+add internet-connection interface WAN type static ipv4-address 10.1.0.40 default-gw 10.1.0.3 mask-length 24 use-connection-as-vlan vlan-id 100
+add internet-connection interface WAN type static ipv4-address 10.1.1.40 default-gw 10.1.1.3 mask-length 24 use-connection-as-vlan vlan-id 101
+add internet-connection interface WAN type static ipv4-address 10.1.2.40 default-gw 10.1.2.3 mask-length 24 use-connection-as-vlan vlan-id 102
+
+add static-route-ipv6 nexthop gateway ipv6-address 2a04:6447:900:100::3 priority 10 ipv6-destination 2a04:6447:900:500::/64
+add static-route nexthop gateway ipv4-address 10.1.0.3 destination 172.23.23.0/24
+
+add static-route-ipv6 ipv6-source "2a04:6447:900:4100::/64" ipv6-destination "2a04:6447:900:200::/64" nexthop gateway ipv6-address "2a04:6447:900:100::3" 
+add static-route-ipv6 ipv6-source "2a04:6447:900:4101::/64" ipv6-destination "2a04:6447:900:200::/64" nexthop gateway ipv6-address "2a04:6447:900:101::3" 
+add static-route-ipv6 ipv6-source "2a04:6447:900:4102::/64" ipv6-destination "2a04:6447:900:200::/64" nexthop gateway ipv6-address "2a04:6447:900:102::3" 
+add static-route source "10.41.0.0/24" destination "10.2.0.0/24" nexthop gateway ipv4-address "10.1.0.3" 
+add static-route source "10.41.1.0/24" destination "10.2.0.0/24" nexthop gateway ipv4-address "10.1.1.3" 
+add static-route source "10.41.2.0/24" destination "10.2.0.0/24" nexthop gateway ipv4-address "10.1.2.3" 
+
+add static-route-ipv6 ipv6-source "2a04:6447:900:4100::/64" ipv6-destination "2a04:6447:900:400::/64" nexthop gateway ipv6-address "2a04:6447:900:100::3" 
+add static-route-ipv6 ipv6-source "2a04:6447:900:4101::/64" ipv6-destination "2a04:6447:900:400::/64" nexthop gateway ipv6-address "2a04:6447:900:101::3" 
+add static-route-ipv6 ipv6-source "2a04:6447:900:4102::/64" ipv6-destination "2a04:6447:900:400::/64" nexthop gateway ipv6-address "2a04:6447:900:102::3" 
+add static-route source "10.41.0.0/24" destination "10.4.0.0/24" nexthop gateway ipv4-address "10.1.0.3" 
+add static-route source "10.41.1.0/24" destination "10.4.0.0/24" nexthop gateway ipv4-address "10.1.1.3" 
+add static-route source "10.41.2.0/24" destination "10.4.0.0/24" nexthop gateway ipv4-address "10.1.2.3" 
+
+
+#add static-route-ipv6 ipv6-source 2a04:6447:900:4100::/64 ipv6-destination ::/0 nexthop gateway ipv6-address 2a04:6447:900:100::3 
+#add static-route-ipv6 ipv6-source 2a04:6447:900:4101::/64 ipv6-destination ::/0 nexthop gateway ipv6-address 2a04:6447:900:101::3 
+#add static-route-ipv6 ipv6-source 2a04:6447:900:4102::/64 ipv6-destination ::/0 nexthop gateway ipv6-address 2a04:6447:900:102::3 
+
+set security-management mode centrally-managed
+set sic_init password zubur1
+
+set internet-connection Internet1 probe-servers off
+set internet-connection Internet2 probe-servers off
+set internet-connection Internet3 probe-servers off
+set internet-connection Internet4 probe-servers off
+set internet-connection Internet5 probe-servers off
+set internet-connection Internet6 probe-servers off
+
+set ntp local-time-zone "TIMEZONE.AMSTERDAM_BERLIN_BERN_ROME_STOCKHOLM_VIENNA" auto-adjust-daylight-saving "on" auto-timeZone "off" local-server "off"
+set ntp server primary "2a04:6447:900:200::100" auto-adjust-daylight-saving "on" auto-timeZone "off"
+set ntp server secondary 10.2.0.10 auto-adjust-daylight-saving "on" auto-timeZone "off"
+
+set ntp interval "5"
+set ntp active "on"
+

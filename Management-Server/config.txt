@@ -1,0 +1,33 @@
+set hostname mgmt1
+set interface Mgmt state on
+set interface Mgmt ipv4-address 172.23.23.13 mask-length 24
+set static-route default nexthop gateway address 192.168.1.254 off
+set grub2-password-hash grub.pbkdf2.sha512.10000.9F97EF26F385FFD5142ECE1CFD3418D59E392AE54D46757151EB4807976694DA22B2BFA968B22AF901860829ED27795C248B9EC882073D3B8286837E49039CFA.D847D58BA7877FF8EEC00C3ED213F7EEDBE1FA6C43EA7F18CC328D9F7C92FC71AB3B2EF2ACDB978E9C185339B406E45267E35D911D0391C3BE0413ADDC99002C
+set user admin password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+set user admin shell /bin/bash
+set expert-password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+save config
+
+config_system --config-string  "mgmt_admin_radio=gaia_admin&mgmt_gui_clients_radio=any&install_security_managment=true&install_mgmt_primary=true&download_info=true&reboot_if_required=true&ipstat_v4=manually&ipstat_v6=manually&maintenance_hash=grub.pbkdf2.sha512.10000.EED96942B7C4CD093DB77FD1C71CFB2DF901F2B8719FFAC15C2C1C8ACF5D8420A8059978CE3DFD5EE057071E1A30E5E34A1D380FA5D212E58E7C50AAFE26F0E0.F0824ED6973BB399CA79F2E743F41137E89DFC73D78B8B0F8D89F6D8F2D78B0AA75AF3939DD554403D32D08047293E263F11541B0816032754A9DB9784253509'
+
+reboot
+
+
+
+set interface Mgmt state on
+set interface Mgmt ipv4-address 172.23.23.13 mask-length 24
+set interface Mgmt ipv6-address 2a04:6447:900:500::30 mask-length 64
+set user admin shell /bin/bash
+set expert-password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+set host name cl1-gw1 ipv6-address 2a04:6447:900:500::11
+set host name cl1-gw2 ipv6-address 2a04:6447:900:500::12
+set host name cl2-gw1 ipv6-address 2a04:6447:900:500::21
+set host name cl2-gw2 ipv6-address 2a04:6447:900:500::22
+set host name vpn-gw1 ipv6-address 2a04:6447:900:100::10
+set host name vpn-gw2 ipv6-address 2a04:6447:900:100::20
+set host name vpn-gw3 ipv6-address 2a04:6447:900:100::30
+set host name vpn-gw4 ipv6-address 2a04:6447:900:100::40
+set host name vpn-gw5 ipv6-address 2a04:6447:900:100::50
+set static-route default nexthop gateway address 172.23.23.4 on
+set ipv6 static-route 2a04:6447:900:100::/64 nexthop gateway 2a04:6447:900:500::13 priority 1 on
+set static-route 10.1.0.0/24 nexthop gateway address 172.23.23.177 on

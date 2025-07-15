@@ -1,0 +1,115 @@
+-=Login over serial to the appliance and run the following commands=-
+
+set hostname cl2-gw1
+set interface Mgmt state on
+set interface Mgmt ipv4-address 172.23.23.106 mask-length 24
+set static-route default nexthop gateway address 192.168.1.254 off
+set grub2-password-hash grub.pbkdf2.sha512.10000.9F97EF26F385FFD5142ECE1CFD3418D59E392AE54D46757151EB4807976694DA22B2BFA968B22AF901860829ED27795C248B9EC882073D3B8286837E49039CFA.D847D58BA7877FF8EEC00C3ED213F7EEDBE1FA6C43EA7F18CC328D9F7C92FC71AB3B2EF2ACDB978E9C185339B406E45267E35D911D0391C3BE0413ADDC99002C
+set user admin password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+set user admin shell /bin/bash
+set expert-password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+save config
+config_system --config-string "ftw_sic_key=zubur1&install_security_managment=false&install_mgmt_primary=false&install_security_gw=true&gateway_daip=false&install_ppak=true&gateway_cluster_member=true&download_info=true&reboot_if_required=true&ipstat_v4=manually&ipstat_v6=manually"
+######################
+
+set interface Mgmt ipv6-address 2a04:6447:900:500::21 mask-length 64
+
+set interface eth1-01 state on
+set interface eth1-02 state on
+add interface eth1-01 vlan 300
+add interface eth1-02 vlan 400
+set interface eth1-01.300 state on
+set interface eth1-02.400 state on
+set interface eth1-01.300 ipv6-address 2a04:6447:900:300::1 mask-length 64
+set interface eth1-02.400 ipv6-address 2a04:6447:900:400::1 mask-length 64
+set interface eth1-01.300 ipv4-address 10.3.0.1 mask-length 24
+set interface eth1-02.400 ipv4-address 10.4.0.1 mask-length 24
+
+
+set ipv6 static-route 2a04:6447:900:200::/64 nexthop gateway 2a04:6447:900:300::10 on
+set static-route 10.2.0.0/24 nexthop gateway address 10.3.0.10 on
+
+set as 64513
+set router-id 172.23.23.108
+
+set bgp external remote-as 64512 on
+
+set routemap BGP-In id 10 on
+set routemap BGP-In id 10 allow
+set routemap BGP-In id 10 match aspath-regex ".*" origin any
+
+
+set routemap BGP-Out-vlan400 id 10 on
+set routemap BGP-Out-vlan400 id 10 allow
+set routemap BGP-Out-vlan400 id 10 match interface eth1-02.400 on
+set routemap BGP-Out-vlan400 id 10 match protocol direct
+
+##bgp not over ########################################################
+
+
+set bgp external remote-as 64512 local-address 2a04:6447:900:300::1 on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 capability ipv6-unicast on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 capability ipv4-unicast off
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 multihop on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 keepalive 30
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 send-keepalives on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 authtype md5 secret vpn123
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 graceful-restart on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 export-routemap "BGP-Out-vlan400" preference 1 family inet6 on
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 import-routemap "BGP-In" preference 1 family inet6 on
+
+delete vpn tunnel 1
+set bgp external remote-as 64513 peer 5000::63 off
+set bgp external remote-as 64513 peer 172.16.20.3 off
+
+>>>>>>>>>>>>>>>>>>  add IPv4:
+
+set bgp external remote-as 64512 local-address 10.3.0.1 on
+set bgp external remote-as 64512 peer 10.2.0.3 on
+set bgp external remote-as 64512 peer 10.2.0.3 capability ipv6-unicast off
+set bgp external remote-as 64512 peer 10.2.0.3 capability ipv4-unicast on
+set bgp external remote-as 64512 peer 10.2.0.3 multihop on
+set bgp external remote-as 64512 peer 10.2.0.3 keepalive 30
+set bgp external remote-as 64512 peer 10.2.0.3 send-keepalives on
+set bgp external remote-as 64512 peer 10.2.0.3 authtype md5 secret vpn123
+set bgp external remote-as 64512 peer 10.2.0.3 graceful-restart on
+set bgp external remote-as 64512 peer 10.2.0.3 export-routemap "BGP-Out-vlan400" preference 1 family inet on
+set bgp external remote-as 64512 peer 10.2.0.3 import-routemap "BGP-In" preference 1 family inet on
+
+
+
+#bgp over VTI########################################################################
+
+add vpn tunnel 1 type numbered local 176.16.30.1 remote 176.16.20.3 peer Cl1 local6 6000::61 remote6 5000::63
+set interface vpnt1 state on
+set bgp external remote-as 64512 peer 5000::63 on
+set bgp external remote-as 64512 peer 5000::63 capability ipv6-unicast on
+set bgp external remote-as 64512 peer 5000::63 multihop on
+set bgp external remote-as 64512 peer 5000::63 keepalive 30
+set bgp external remote-as 64512 peer 5000::63 send-keepalives on
+set bgp external remote-as 64512 peer 5000::63 authtype md5 secret vpn123
+set bgp external remote-as 64512 peer 5000::63 graceful-restart on
+set bgp external remote-as 64512 peer 5000::63 export-routemap "BGP-Out-vlan400" preference 1 family inet6 on
+set bgp external remote-as 64512 peer 5000::63 import-routemap "BGP-In" preference 1 family inet6 on
+
+
+
+set bgp external remote-as 64512 local-address 10.3.0.1 off
+set bgp external remote-as 64512 peer 2a04:6447:900:200::3 off
+set bgp external remote-as 64512 peer 10.2.0.3 off
+
+
+>>>>>>>>>>>>>>>>>>>>>>add IPv4:
+
+set bgp external remote-as 64512 peer 176.16.20.3 on
+set bgp external remote-as 64512 peer 176.16.20.3 capability ipv4-unicast on
+set bgp external remote-as 64512 peer 176.16.20.3 multihop on
+set bgp external remote-as 64512 peer 176.16.20.3 keepalive 30
+set bgp external remote-as 64512 peer 176.16.20.3 send-keepalives on
+set bgp external remote-as 64512 peer 176.16.20.3 authtype md5 secret vpn123
+set bgp external remote-as 64512 peer 176.16.20.3 graceful-restart on
+set bgp external remote-as 64512 peer 176.16.20.3 export-routemap "BGP-Out-vlan400" preference 1 family inet on
+set bgp external remote-as 64512 peer 176.16.20.3 import-routemap "BGP-In" preference 1 family inet on
+
+save config

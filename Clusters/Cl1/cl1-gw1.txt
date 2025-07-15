@@ -1,0 +1,188 @@
+-=Login over serial to the appliance and run the following commands=-
+
+set hostname cl1-gw1
+set interface Mgmt state on
+set interface Mgmt ipv4-address 172.23.23.175 mask-length 24
+set static-route default nexthop gateway address 192.168.1.254 off
+
+
+set grub2-password-hash grub.pbkdf2.sha512.10000.9F97EF26F385FFD5142ECE1CFD3418D59E392AE54D46757151EB4807976694DA22B2BFA968B22AF901860829ED27795C248B9EC882073D3B8286837E49039CFA.D847D58BA7877FF8EEC00C3ED213F7EEDBE1FA6C43EA7F18CC328D9F7C92FC71AB3B2EF2ACDB978E9C185339B406E45267E35D911D0391C3BE0413ADDC99002C
+set user admin password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+set user admin shell /bin/bash
+set expert-password-hash $6$7.j0N3jrxKHQOQxZ$Bw5.cAlCvMCbrOeAY9hnkV/3upo2skULpIzzHLtAeGbGhtlKyDKpfSRaLgIzv4eSUtQuWDE4V/M3f1U4v7fAK/
+save config
+config_system --config-string "ftw_sic_key=zubur1&install_security_managment=false&install_mgmt_primary=false&install_security_gw=true&gateway_daip=false&install_ppak=true&gateway_cluster_member=true&download_info=true&reboot_if_required=true&ipstat_v4=manually&ipstat_v6=manually"
+
+reboot
+
+######################################################
+
+set interface Mgmt ipv6-address 2a04:6447:900:500::11 mask-length 64 
+
+
+set interface eth1-01 state on
+set interface eth1-02 state on
+add interface eth1-01 vlan 100
+add interface eth1-01 vlan 101
+add interface eth1-01 vlan 102
+add interface eth1-02 vlan 200
+set interface eth1-01.100 state on
+set interface eth1-01.101 state on
+set interface eth1-01.102 state on
+set interface Sync state on 
+set interface eth1-01.100 ipv6-address 2a04:6447:900:100::1 mask-length 64
+set interface eth1-01.101 ipv6-address 2a04:6447:900:101::1 mask-length 64
+set interface eth1-01.102 ipv6-address 2a04:6447:900:102::1 mask-length 64
+set interface eth1-02.200 ipv6-address 2a04:6447:900:200::1 mask-length 64
+set interface eth1-01.100 ipv4-address 10.1.0.1 mask-length 24
+set interface eth1-01.101 ipv4-address 10.1.1.1 mask-length 24
+set interface eth1-01.102 ipv4-address 10.1.2.1 mask-length 24
+set interface eth1-02.200 ipv4-address 10.2.0.1 mask-length 24
+set interface Sync ipv4-address 192.168.20.1 mask-length 24
+
+set static-route default nexthop gateway address 172.23.23.4 on
+
+set ipv6 static-route 2a04:6447:900:300::/64 nexthop gateway 2a04:6447:900:200::10 on
+set static-route 10.3.0.0/24 nexthop gateway address 10.2.0.10 on
+
+set ipv6 static-route 2a04:6447:900:1100::/64 nexthop gateway 2a04:6447:900:100::10 on
+set ipv6 static-route 2a04:6447:900:1101::/64 nexthop gateway 2a04:6447:900:101::10 on
+set ipv6 static-route 2a04:6447:900:1102::/64 nexthop gateway 2a04:6447:900:102::10 on
+set static-route 10.11.0.0/24 nexthop gateway address 10.1.0.10 on
+set static-route 10.11.1.0/24 nexthop gateway address 10.1.1.10 on
+set static-route 10.11.2.0/24 nexthop gateway address 10.1.2.10 on
+
+set ipv6 static-route 2a04:6447:900:2100::/64 nexthop gateway 2a04:6447:900:100::20 on
+set ipv6 static-route 2a04:6447:900:2101::/64 nexthop gateway 2a04:6447:900:101::20 on
+set ipv6 static-route 2a04:6447:900:2102::/64 nexthop gateway 2a04:6447:900:102::20 on
+set static-route 10.21.0.0/24 nexthop gateway address 10.1.0.20 on
+set static-route 10.21.1.0/24 nexthop gateway address 10.1.1.20 on
+set static-route 10.21.2.0/24 nexthop gateway address 10.1.2.20 on
+
+set ipv6 static-route 2a04:6447:900:3100::/64 nexthop gateway 2a04:6447:900:100::30 on
+set ipv6 static-route 2a04:6447:900:3101::/64 nexthop gateway 2a04:6447:900:101::30 on
+set ipv6 static-route 2a04:6447:900:3102::/64 nexthop gateway 2a04:6447:900:102::30 on
+set static-route 10.31.0.0/24 nexthop gateway address 10.1.0.30 on
+set static-route 10.31.1.0/24 nexthop gateway address 10.1.1.30 on
+set static-route 10.31.2.0/24 nexthop gateway address 10.1.2.30 on
+
+set ipv6 static-route 2a04:6447:900:4100::/64 nexthop gateway 2a04:6447:900:100::40 on
+set ipv6 static-route 2a04:6447:900:4101::/64 nexthop gateway 2a04:6447:900:101::40 on
+set ipv6 static-route 2a04:6447:900:4102::/64 nexthop gateway 2a04:6447:900:102::40 on
+set static-route 10.41.0.0/24 nexthop gateway address 10.1.0.40 on
+set static-route 10.41.1.0/24 nexthop gateway address 10.1.1.40 on
+set static-route 10.41.2.0/24 nexthop gateway address 10.1.2.40 on
+
+set ipv6 static-route 2a04:6447:900:5100::/64 nexthop gateway 2a04:6447:900:100::50 on
+set ipv6 static-route 2a04:6447:900:5101::/64 nexthop gateway 2a04:6447:900:101::50 on
+set ipv6 static-route 2a04:6447:900:5102::/64 nexthop gateway 2a04:6447:900:102::50 on
+set static-route 10.51.0.0/24 nexthop gateway address 10.1.0.50 on
+set static-route 10.51.1.0/24 nexthop gateway address 10.1.1.50 on
+set static-route 10.51.2.0/24 nexthop gateway address 10.1.2.50 on
+
+set as 64512
+set router-id 172.23.23.177
+
+set bgp external remote-as 64513 on
+
+set routemap BGP-In id 10 on
+set routemap BGP-In id 10 allow
+set routemap BGP-In id 10 match aspath-regex ".*" origin any
+
+set routemap BGP-Out id 10 on
+set routemap BGP-Out id 10 restrict
+set routemap BGP-Out id 10 match network 2a04:6447:900:300::/64 exact restrict on
+set routemap BGP-Out id 10 match protocol static
+
+set routemap BGP-Out id 12 on
+set routemap BGP-Out id 12 restrict
+set routemap BGP-Out id 12 match network 10.3.0.0/24 exact restrict on
+set routemap BGP-Out id 12 match protocol static
+
+set routemap BGP-Out id 15 on
+set routemap BGP-Out id 15 allow
+set routemap BGP-Out id 15 match protocol static
+
+set routemap BGP-Out-vlan100 id 5 on
+set routemap BGP-Out-vlan100 id 5 allow
+set routemap BGP-Out-vlan100 id 5 match interface eth1-01.100 on
+set routemap BGP-Out-vlan100 id 5 match interface eth1-01.101 on
+set routemap BGP-Out-vlan100 id 5 match interface eth1-01.102 on
+set routemap BGP-Out-vlan100 id 5 match protocol direct
+
+
+
+##bgp not over VTI############################################################################
+
+
+set bgp external remote-as 64513 local-address 2a04:6447:900:200::1 on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 capability ipv6-unicast on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 capability ipv4-unicast off
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 multihop on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 keepalive 30
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 send-keepalives on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 authtype md5 secret vpn123
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 graceful-restart on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 export-routemap "BGP-Out" preference 1 family inet6 on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 export-routemap "BGP-Out-vlan100" preference 2 family inet6 on
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 import-routemap "BGP-In" preference 1 family inet6 on
+
+delete vpn tunnel 1
+set bgp external remote-as 64513 peer 6000::63 off
+set bgp external remote-as 64513 peer 172.16.30.3 off
+
+
+>>>>>>>>>>>>>>>>>>>>>>>adding IPv4:
+
+set bgp external remote-as 64513 local-address 10.2.0.1 on
+set bgp external remote-as 64513 peer 10.3.0.3 on
+set bgp external remote-as 64513 peer 10.3.0.3 capability ipv4-unicast on
+set bgp external remote-as 64513 peer 10.3.0.3 capability ipv6-unicast off
+set bgp external remote-as 64513 peer 10.3.0.3 multihop on
+set bgp external remote-as 64513 peer 10.3.0.3 keepalive 30
+set bgp external remote-as 64513 peer 10.3.0.3 send-keepalives on
+set bgp external remote-as 64513 peer 10.3.0.3 authtype md5 secret vpn123
+set bgp external remote-as 64513 peer 10.3.0.3 graceful-restart on
+set bgp external remote-as 64513 peer 10.3.0.3 export-routemap "BGP-Out" preference 1 family inet on
+set bgp external remote-as 64513 peer 10.3.0.3 export-routemap "BGP-Out-vlan100" preference 2 family inet on
+set bgp external remote-as 64513 peer 10.3.0.3 import-routemap "BGP-In" preference 1 family inet on
+
+##bgp over VTI############################################################################
+
+add vpn tunnel 1 type numbered local 176.16.20.1 remote 176.16.30.3 peer Cl2 local6 5000::61 remote6 6000::63
+set interface vpnt1 state on
+
+set bgp external remote-as 64513 peer 6000::63 on
+set bgp external remote-as 64513 peer 6000::63 capability ipv6-unicast on
+set bgp external remote-as 64513 peer 6000::63 multihop on
+set bgp external remote-as 64513 peer 6000::63 keepalive 30
+set bgp external remote-as 64513 peer 6000::63 send-keepalives on
+set bgp external remote-as 64513 peer 6000::63 authtype md5 secret vpn123
+set bgp external remote-as 64513 peer 6000::63 graceful-restart on
+set bgp external remote-as 64513 peer 6000::63 export-routemap "BGP-Out" preference 1 family inet6  on
+set bgp external remote-as 64513 peer 6000::63 export-routemap "BGP-Out-vlan100" preference 2 family inet6  on
+set bgp external remote-as 64513 peer 6000::63 import-routemap "BGP-In" preference 1 family inet6 on
+
+
+set bgp external remote-as 64513 peer 2a04:6447:900:300::3 off
+set bgp external remote-as 64513 peer 10.3.0.3 off
+set bgp external remote-as 64513 local-address 2a04:6447:900:200::1 off
+set bgp external remote-as 64513 local-address 10.2.0.1 off
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>adding IPv4:
+
+set bgp external remote-as 64513 peer 176.16.30.3 on
+set bgp external remote-as 64513 peer 176.16.30.3 capability ipv4-unicast on
+set bgp external remote-as 64513 peer 176.16.30.3 multihop on
+set bgp external remote-as 64513 peer 176.16.30.3 keepalive 30
+set bgp external remote-as 64513 peer 176.16.30.3 send-keepalives on
+set bgp external remote-as 64513 peer 176.16.30.3 authtype md5 secret vpn123
+set bgp external remote-as 64513 peer 176.16.30.3 graceful-restart on
+set bgp external remote-as 64513 peer 176.16.30.3 export-routemap "BGP-Out" preference 1 family inet  on
+set bgp external remote-as 64513 peer 176.16.30.3 export-routemap "BGP-Out-vlan100" preference 2 family inet  on
+set bgp external remote-as 64513 peer 176.16.30.3 import-routemap "BGP-In" preference 1 family inet on
+
+save config

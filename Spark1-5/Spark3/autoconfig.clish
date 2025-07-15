@@ -1,0 +1,5 @@
+set zero-touch mode off
+set admin-access interfaces WAN access allow
+set admin-access allowed-ipv4-addresses any
+set administrator username admin password-hash $5$PH/SXNJh2.KjxrQO$7mnNzCjfcPxEvySF7UW86aa/1DNhgwJwe1AbgbLo4gC
+set ipv6-state on
