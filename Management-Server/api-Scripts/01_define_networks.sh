@@ -381,6 +381,13 @@ mgmt_cli add group -s /home/admin/sid.txt\
 		 ignore-warnings true 
 
 mgmt_cli add group -s /home/admin/sid.txt\
+         name "Cl1_to_cl2_EncDom46" \
+         members.1 "IPv6_2a04:6447:900:200::_64" \
+         members.2 "IPv4_10.2.0.0_24" \
+         members.3 "Spark_All_EncDom46" \
+		 ignore-warnings true 
+
+mgmt_cli add group -s /home/admin/sid.txt\
          name "Cl1_EncDom" \
          members.1 "IPv6_2a04:6447:900:200::_64" \
          members.2 "IPv6_2a04:6447:900:400::_64" \
