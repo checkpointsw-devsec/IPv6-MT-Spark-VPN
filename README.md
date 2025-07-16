@@ -22,5 +22,6 @@ the folders contain <br>
   source 10_cl1_cl2_community.sh (create vpn community for cl1 and cl2, sets enhanced link selection and routing) <br>
   source 11_cl1_spark_community.sh (create vpn community for cl1 and spark gateways, sets enhanced link selection and routing) <br>
   source 99_Install_policy.sh (install policy on cl1+2, spark1-5) <br>
-    
+
+all api are used in the main.sh
   
