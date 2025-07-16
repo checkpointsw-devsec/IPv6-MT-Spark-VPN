@@ -21,7 +21,7 @@ mgmt_cli add vpn-community-star -s /home/admin/sid.txt \
     tunnel-granularity "per_host" \
     center-gateways "cl1" \
     override-vpn-domains.1.gateway "cl1" \
-    override-vpn-domains.1.vpn-domain "Spark_All_EncDom" \
+    override-vpn-domains.1.vpn-domain "Cl1_to_cl2_EncDom46" \
     override-interfaces.1.gateway "cl1" \
     override-interfaces.1.interfaces.1.ip-version "ipv6" \
     override-interfaces.1.interfaces.1.interface-name "$cl1_vlan200" \
