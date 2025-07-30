@@ -92,6 +92,8 @@ mgmt_cli set-simple-gateway -s /home/admin/sid.txt\
          name "vpn-gw-4" \
 		 ipv6-address "2a04:6447:900:100::40" \
 		 allow-smb true \
+		 vpn-settings.vpn-domain-type "manual" \
+		 vpn-settings.vpn-domain "Spark4_EncDom46" \
 		 vpn-settings.interfaces.1.interface-name "$rugg_vlan100" \
          vpn-settings.interfaces.1.ip-version "ipv6" \
 		 vpn-settings.interfaces.2.interface-name "$rugg_vlan101" \
@@ -108,8 +110,8 @@ mgmt_cli set-simple-gateway -s /home/admin/sid.txt\
 myUID0=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "vpn-gw-4" -f json | jq '.objects[0].uid')
 mgmt_cli set-generic-object -s /home/admin/sid.txt uid $myUID0 securityBladesTopologyMode "TOPOLOGY_TABLE" 
 
-myUID1=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "vpn-gw-4" -f json | jq '.objects[1].uid')
-mgmt_cli set-generic-object -s /home/admin/sid.txt uid $myUID1 securityBladesTopologyMode "TOPOLOGY_TABLE" 
+#myUID1=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "vpn-gw-4" -f json | jq '.objects[1].uid')
+#mgmt_cli set-generic-object -s /home/admin/sid.txt uid $myUID1 securityBladesTopologyMode "TOPOLOGY_TABLE" 
 
 cprid_util -server 2a04:6447:900:100::40 -verbose rexec -rcmd /bin/bash -c "LOGNAME=admin bashUser on"
 

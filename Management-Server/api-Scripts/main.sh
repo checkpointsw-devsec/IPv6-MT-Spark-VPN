@@ -2,6 +2,7 @@
 source 00_general_settings.sh
 source 01_define_networks.sh
 source 02_cl1.sh
+source 02_cl1_part2.sh
 source 03_cl2.sh
 source 09_CleanupRule.sh
 source 98_Install_policy.sh

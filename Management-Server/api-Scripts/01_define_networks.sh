@@ -366,10 +366,11 @@ mgmt_cli add group -s /home/admin/sid.txt\
          members.2 "Spark2_EncDom" \
          members.3 "Spark3_EncDom" \
          members.4 "Spark4_EncDom" \
-		 members.5 "IPv6_2a04:6447:900:200::_64" \
-		 members.6 "IPv4_10.2.0.0_24" \
-		 ignore-warnings true \
-         members.5 "Spark5_EncDom" 
+		 members.5 "Spark5_EncDom" \
+		 members.6 "IPv6_2a04:6447:900:200::_64" \
+		 members.7 "IPv4_10.2.0.0_24" \
+		 ignore-warnings true 
+         
 
 
 mgmt_cli add group -s /home/admin/sid.txt\

@@ -17,7 +17,7 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
          cluster-mode "cluster-xl-ha" \
          firewall true \
          vpn true \
-         ips false \
+         ips true \
 		 cluster-settings.use-virtual-mac "true" \
 		 cluster-settings.member-recovery-mode "according-to-priority" \
 		 cluster-settings.state-synchronization.delayed "false" \
@@ -168,8 +168,5 @@ mgmt_cli set-simple-cluster -s /home/admin/sid.txt\
          vpn-settings.interfaces.7.ip-version "ipv4" \
 		 vpn-settings.interfaces.8.interface-name "eth1-02.200" \
          vpn-settings.interfaces.8.ip-version "ipv4" 
-
-myUID0=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "Cl1" -f json | jq '.objects[1].uid')
-mgmt_cli set-generic-object -s /home/admin/sid.txt uid $myUID0 threatEngineMode detect_only -r true
 
 ./publish_and_wait.sh 
