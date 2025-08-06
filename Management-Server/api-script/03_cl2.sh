@@ -16,9 +16,9 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
          cluster-mode "cluster-xl-ha" \
          firewall true \
          vpn true \
-		 cluster-settings.use-virtual-mac "true" \
-		 cluster-settings.member-recovery-mode "according-to-priority" \
-		 cluster-settings.state-synchronization.delayed "false" \
+	 cluster-settings.use-virtual-mac "true" \
+	 cluster-settings.member-recovery-mode "according-to-priority" \
+	 cluster-settings.state-synchronization.delayed "false" \
          interfaces.1.name "$cl2_vlan300" \
          interfaces.1.ipv4-address "10.3.0.3" \
          interfaces.1.ipv4-mask-length "24" \
@@ -94,9 +94,10 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
 highlight_message '############### add vpn EHL selection interfaces ###########'
 mgmt_cli set-simple-cluster -s /home/admin/sid.txt\
          name "Cl2" \
-		 vpn-settings.interfaces.1.interface-name "$cl2_vlan300" \
+	 vpn-settings.vpn-domain-exclude-external-ip-addresses "true" \
+	 vpn-settings.interfaces.1.interface-name "$cl2_vlan300" \
          vpn-settings.interfaces.1.ip-version "ipv6" \
-		 vpn-settings.interfaces.2.interface-name "$cl2_vlan300" \
+	 vpn-settings.interfaces.2.interface-name "$cl2_vlan300" \
          vpn-settings.interfaces.2.ip-version "ipv4" 
 
 ./publish_and_wait.sh 
