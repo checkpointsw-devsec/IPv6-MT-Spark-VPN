@@ -94,7 +94,7 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
 highlight_message '############### add vpn EHL selection interfaces ###########'
 mgmt_cli set-simple-cluster -s /home/admin/sid.txt\
          name "Cl2" \
-	 vpn-settings.vpn-domain-exclude-external-ip-addresses "true" \
+	 vpn-settings.vpn-domain-exclude-external-ip-addresses "false" \
 	 vpn-settings.interfaces.1.interface-name "$cl2_vlan300" \
          vpn-settings.interfaces.1.ip-version "ipv6" \
 	 vpn-settings.interfaces.2.interface-name "$cl2_vlan300" \
