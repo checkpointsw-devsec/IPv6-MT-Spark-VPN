@@ -14,9 +14,9 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         os-name "Gaia Embedded" \
         hardware "1585R Appliances" \
         ipv6-address "2a04:6447:900:100::20" \
-		ipv4-address "10.1.0.20" \
+	ipv4-address "10.1.0.20" \
         firewall true \
-		one-time-password "$otp" \
+	one-time-password "$otp" \
         trust-settings.initiation-phase 'now' \
         platform-portal-settings.portal-web-settings.main-url "https://[2a04:6447:900:100::20]/" \
         interfaces.1.name "$rugg_vlan100" \
@@ -24,7 +24,7 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         interfaces.1.ipv6-mask-length "64" \
         interfaces.1.ipv4-address "10.1.0.20" \
         interfaces.1.ipv4-mask-length "24" \
-		interfaces.1.topology "EXTERNAL" \
+	interfaces.1.topology "EXTERNAL" \
         interfaces.1.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
         interfaces.1.topology-settings.interface-leads-to-dmz false \
         interfaces.1.anti-spoofing true \
@@ -34,7 +34,7 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         interfaces.2.ipv6-mask-length "64" \
         interfaces.2.ipv4-address "10.1.1.20" \
         interfaces.2.ipv4-mask-length "24" \
-		interfaces.2.topology "External" \
+	interfaces.2.topology "External" \
         interfaces.2.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
         interfaces.2.topology-settings.interface-leads-to-dmz false \
         interfaces.2.anti-spoofing true \
@@ -44,7 +44,7 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         interfaces.3.ipv6-mask-length "64" \
         interfaces.3.ipv4-address "10.1.2.20" \
         interfaces.3.ipv4-mask-length "24" \
-		interfaces.3.topology "External" \
+	interfaces.3.topology "External" \
         interfaces.3.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
         interfaces.3.topology-settings.interface-leads-to-dmz false \
         interfaces.3.anti-spoofing true \
@@ -52,7 +52,7 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         interfaces.4.name "LAN1" \
         interfaces.4.ipv6-address "2a04:6447:900:2100::1" \
         interfaces.4.ipv6-mask-length "64" \
-		interfaces.4.ipv4-address "10.21.0.20" \
+	interfaces.4.ipv4-address "10.21.0.20" \
         interfaces.4.ipv4-mask-length "24" \
         interfaces.4.topology "Internal" \
         interfaces.4.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
@@ -62,7 +62,7 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         interfaces.5.name "LAN2" \
         interfaces.5.ipv6-address "2a04:6447:900:2101::1" \
         interfaces.5.ipv6-mask-length "64" \
-		interfaces.5.ipv4-address "10.21.1.20" \
+	interfaces.5.ipv4-address "10.21.1.20" \
         interfaces.5.ipv4-mask-length "24" \
         interfaces.5.topology "Internal" \
         interfaces.5.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
@@ -72,7 +72,7 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
         interfaces.6.name "LAN3" \
         interfaces.6.ipv6-address "2a04:6447:900:2102::1" \
         interfaces.6.ipv6-mask-length "64" \
-		interfaces.6.ipv4-address "10.21.2.20" \
+	interfaces.6.ipv4-address "10.21.2.20" \
         interfaces.6.ipv4-mask-length "24" \
         interfaces.6.topology "Internal" \
         interfaces.6.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
@@ -83,29 +83,30 @@ mgmt_cli add simple-gateway -s /home/admin/sid.txt\
 highlight_message '############### enable vpn blade on spark2       ###########'
 mgmt_cli set simple-gateway -s /home/admin/sid.txt\
          name "vpn-gw-2" \
-		 allow-smb true \
-		 ipv6-address "2a04:6447:900:100::20" \
+	 allow-smb true \
+	 ipv6-address "2a04:6447:900:100::20" \
          vpn true
 		 
 highlight_message '############### add ELS interfaces  spark2       ###########'
 mgmt_cli set-simple-gateway -s /home/admin/sid.txt\
          name "vpn-gw-2" \
-		 ipv6-address "2a04:6447:900:100::20" \
-		 allow-smb true \
-		 vpn-settings.vpn-domain-type "manual" \
-		 vpn-settings.vpn-domain "Spark2_EncDom46" \
-		 vpn-settings.interfaces.1.interface-name "$rugg_vlan100" \
+	 ipv6-address "2a04:6447:900:100::20" \
+	 allow-smb true \
+	 vpn-settings.interfaces.1.interface-name "$rugg_vlan100" \
          vpn-settings.interfaces.1.ip-version "ipv6" \
-		 vpn-settings.interfaces.2.interface-name "$rugg_vlan101" \
+	 vpn-settings.interfaces.2.interface-name "$rugg_vlan101" \
          vpn-settings.interfaces.2.ip-version "ipv6" \
-		 vpn-settings.interfaces.3.interface-name "$rugg_vlan102" \
+	 vpn-settings.interfaces.3.interface-name "$rugg_vlan102" \
          vpn-settings.interfaces.3.ip-version "ipv6" \
-		 vpn-settings.interfaces.4.interface-name "$rugg_vlan100" \
+	 vpn-settings.interfaces.4.interface-name "$rugg_vlan100" \
          vpn-settings.interfaces.4.ip-version "ipv4" \
-		 vpn-settings.interfaces.5.interface-name "$rugg_vlan101" \
+	 vpn-settings.interfaces.5.interface-name "$rugg_vlan101" \
          vpn-settings.interfaces.5.ip-version "ipv4" \
-		 vpn-settings.interfaces.6.interface-name "$rugg_vlan102" \
+	 vpn-settings.interfaces.6.interface-name "$rugg_vlan102" \
          vpn-settings.interfaces.6.ip-version "ipv4" 
+
+#	 vpn-settings.vpn-domain-type "manual" \
+#	 vpn-settings.vpn-domain "Spark2_EncDom46" \
 
 myUID0=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "vpn-gw-2" -f json | jq '.objects[0].uid')
 mgmt_cli set-generic-object -s /home/admin/sid.txt uid $myUID0 securityBladesTopologyMode "TOPOLOGY_TABLE" 
