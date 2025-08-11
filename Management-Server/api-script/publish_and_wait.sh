@@ -29,6 +29,6 @@ done
 
 highlight_message "###############Publish completed with status: $STATUS ######"
 highlight_message '########################   logout  ###########################'
-ping 127.0.0.1 -c 5 > null
+ping 127.0.0.1 -c 5 > /dev/null
 mgmt_cli logout -s /home/admin/sid.txt
 # rm /home/admin/sid.txt

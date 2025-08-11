@@ -20,7 +20,7 @@ mgmt_cli add vpn-community-star -s /home/admin/sid.txt \
 	link-selection-mode "enhanced" \
 	tunnel-granularity "per_subnet" \
 	center-gateways "cl1" \
-	override-vpn-domains.1.gateway "cl1" \
+ 	override-vpn-domains.1.gateway "cl1" \
 	override-vpn-domains.1.vpn-domain "Cl1_EncDom46" \
 	override-interfaces.1.gateway "cl1" \
 	override-interfaces.1.interfaces.1.ip-version "ipv6" \
@@ -40,6 +40,8 @@ mgmt_cli add vpn-community-star -s /home/admin/sid.txt \
 	satellite-gateways.3 "vpn-gw-3" \
 	satellite-gateways.4 "vpn-gw-4" \
 	satellite-gateways.5 "vpn-gw-5" 
+
+
 
 myUID=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "cl1_spark_community" -f json | jq '.objects[].uid')
 

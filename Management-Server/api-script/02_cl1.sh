@@ -18,9 +18,9 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
          firewall true \
          vpn true \
          ips true \
-	 cluster-settings.use-virtual-mac "true" \
-	 cluster-settings.member-recovery-mode "according-to-priority" \
-	 cluster-settings.state-synchronization.delayed "false" \
+		 cluster-settings.use-virtual-mac "true" \
+		 cluster-settings.member-recovery-mode "according-to-priority" \
+		 cluster-settings.state-synchronization.delayed "false" \
          interfaces.1.name "$cl1_vlan100" \
          interfaces.1.ipv4-address "10.1.0.3" \
          interfaces.1.ipv4-mask-length "24" \
@@ -80,10 +80,10 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
          interfaces.6.interface-type "sync" \
          interfaces.6.topology "Internal" \
          interfaces.6.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask" \
-	 interfaces.6.topology-settings.interface-leads-to-dmz false \
-	 interfaces.6.anti-spoofing true \
+		 interfaces.6.topology-settings.interface-leads-to-dmz false \
+		 interfaces.6.anti-spoofing true \
          interfaces.6.anti-spoofing-settings.action "detect" \
-	 members.1.name "cl1-gw1" \
+		 members.1.name "cl1-gw1" \
          members.1.ipv4-address "$cl1_gw1_main_ipv4" \
          members.1.ipv6-address "2a04:6447:900:500::11" \
          members.1.one-time-password "$otp" \
@@ -144,7 +144,7 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
          members.2.interfaces.5.ipv4-mask-length "24" \
          members.2.interfaces.5.ipv6-address "2a04:6447:900:500::12" \
          members.2.interfaces.5.ipv6-mask-length "64" \
-	 members.2.interfaces.6.name "$cl1_Sync" \
+		 members.2.interfaces.6.name "$cl1_Sync" \
          members.2.interfaces.6.ipv4-address "192.168.20.2" \
          members.2.interfaces.6.ipv4-mask-length "24" 
          
@@ -152,22 +152,22 @@ mgmt_cli add-simple-cluster -s /home/admin/sid.txt\
 highlight_message '############### add vpn EHL selection interfaces ###########'
 mgmt_cli set-simple-cluster -s /home/admin/sid.txt\
          name "Cl1" \
-	 vpn-settings.vpn-domain-exclude-external-ip-addresses "false" \
-         vpn-settings.interfaces.1.interface-name "eth1-01.100" \
+         vpn-settings.vpn-domain-exclude-external-ip-addresses "false" \
+		 vpn-settings.interfaces.1.interface-name "eth1-01.100" \
          vpn-settings.interfaces.1.ip-version "ipv6" \
-	 vpn-settings.interfaces.2.interface-name "eth1-01.101" \
+		 vpn-settings.interfaces.2.interface-name "eth1-01.101" \
          vpn-settings.interfaces.2.ip-version "ipv6" \
-	 vpn-settings.interfaces.3.interface-name "eth1-01.102" \
+		 vpn-settings.interfaces.3.interface-name "eth1-01.102" \
          vpn-settings.interfaces.3.ip-version "ipv6" \
-	 vpn-settings.interfaces.4.interface-name "eth1-02.200" \
+		 vpn-settings.interfaces.4.interface-name "eth1-02.200" \
          vpn-settings.interfaces.4.ip-version "ipv6" \
-	 vpn-settings.interfaces.5.interface-name "eth1-01.100" \
+		 vpn-settings.interfaces.5.interface-name "eth1-01.100" \
          vpn-settings.interfaces.5.ip-version "ipv4" \
-	 vpn-settings.interfaces.6.interface-name "eth1-01.101" \
+		 vpn-settings.interfaces.6.interface-name "eth1-01.101" \
          vpn-settings.interfaces.6.ip-version "ipv4" \
-	 vpn-settings.interfaces.7.interface-name "eth1-01.102" \
+		 vpn-settings.interfaces.7.interface-name "eth1-01.102" \
          vpn-settings.interfaces.7.ip-version "ipv4" \
-	 vpn-settings.interfaces.8.interface-name "eth1-02.200" \
+		 vpn-settings.interfaces.8.interface-name "eth1-02.200" \
          vpn-settings.interfaces.8.ip-version "ipv4" 
 
 ./publish_and_wait.sh 

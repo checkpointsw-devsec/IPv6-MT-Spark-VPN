@@ -27,8 +27,9 @@ mgmt_cli add vpn-community-star -s /home/admin/sid.txt \
     override-interfaces.1.interfaces.1.interface-name "$cl1_vlan200" \
     override-interfaces.1.interfaces.2.ip-version "ipv4" \
     override-interfaces.1.interfaces.2.interface-name "$cl1_vlan200" \
-    satellite-gateways.1 "cl2" 
-
+    satellite-gateways.1 "cl2" \
+    override-vpn-domains.2.gateway "cl2" \
+	override-vpn-domains.2.vpn-domain "Cl2_EncDom46" 
 	
 myUID=$(mgmt_cli show-generic-objects -s /home/admin/sid.txt name "cl1_cl2_community" -f json | jq '.objects[].uid')
 

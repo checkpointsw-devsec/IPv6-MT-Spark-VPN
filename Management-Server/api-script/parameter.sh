@@ -26,7 +26,7 @@ cl1_Sync=eth1-03
 cl2_main_ipv4=172.23.23.108
 cl2_gw1_main_ipv4=172.23.23.106
 cl2_gw2_main_ipv4=172.23.23.107
-cl2_mgmt=Mgmt
+cl2_mgmt=eth5
 cl2_vlan300=eth2-01.300
 cl2_vlan400=eth2-02.400
 
@@ -60,7 +60,7 @@ while [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; do
     else
         echo "Login failed. Retrying..."
         ((RETRY_COUNT++))
-        sleep 5  # Add a small delay before retrying
+        sleep 10  # Add a small delay before retrying
     fi
 done
 
